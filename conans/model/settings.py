@@ -31,11 +31,11 @@ class SettingsItem(object):
             # recursive
             for k, v in definition.items():
                 # None string from yaml definition maps to python None, means not-defined value
-                k = str(k) if k is not None else None
+                k = str(k) if k is not None and k != 'None' else None
                 self._definition[k] = Settings(v, name, k)
         else:
             # list or tuple of possible values, it can include "ANY"
-            self._definition = [str(v) if v is not None else None for v in definition]
+            self._definition = [str(v) if v is not None and v != 'None' else None for v in definition]
 
     def __contains__(self, value):
         return value in (self._value or "")
